@@ -1,0 +1,22 @@
+package com.walace.course.resources.exception;
+
+import java.time.Instant;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+
+import com.walace.course.services.exception.ResourceNotFoundException;
+
+@ControllerAdvice
+public class ResourceExceptionHandler {
+	
+	public ResponseEntity<StandardError> resourceNotFoun(ResourceNotFoundException e, HttpServletRequest request){
+	String error = "Resource not found";
+	HttpStatus status = HttpStatus.NOT_FOUND;
+	StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+    return ResponseEntity.status(status).body(err);
+	}
+}
